@@ -3,7 +3,6 @@ import styled from "styled-components";
 import ContactItem from "./ContactItem";
 
 interface ContactModel {
-  thm: any;
   t: any;
 }
 
@@ -30,7 +29,7 @@ const contactList = [
   },
 ];
 
-const Contact = ({ thm, t }: ContactModel) => {
+const Contact = ({ t }: ContactModel) => {
   return (
     <Body>
       <Container>
@@ -42,9 +41,8 @@ const Contact = ({ thm, t }: ContactModel) => {
         <Title>{t("contact")}</Title>
         <Builder>
           {contactList.map((e, idx) => (
-            <Grid style={{ "--count": idx } as React.CSSProperties}>
+            <Grid style={{ "--count": idx } as React.CSSProperties} key={idx}>
               <ContactItem
-                theme={thm}
                 icon={e.icon}
                 title={t(e.title)}
                 details={t(e.details)}
@@ -121,7 +119,7 @@ const Contact = ({ thm, t }: ContactModel) => {
 
 export default Contact;
 
-const Body = styled.body`
+const Body = styled.div`
   background-color: ${({ theme }) => theme.body.background};
   overflow: hidden;
   padding: 0 10px;
@@ -144,7 +142,7 @@ const Space = styled.div`
 `;
 const Symbol = styled.img`
   position: absolute;
-  top: 80px;
+  top: 94px;
   width: clamp(45px, 4.2vw, 50px);
   filter: invert(${({ theme }) => theme.invert});
   opacity: ${({ theme }) => theme.opacity};
@@ -152,7 +150,7 @@ const Symbol = styled.img`
 const Title = styled.h5`
   color: ${({ theme }) => theme.text.color};
   position: absolute;
-  top: clamp(135px, 7vw, 150px);
+  top: clamp(145px, 7vw, 150px);
   opacity: ${({ theme }) => theme.opacity};
 `;
 const Builder = styled.div`

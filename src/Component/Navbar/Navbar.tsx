@@ -1,7 +1,9 @@
-import "./Navbar.css";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import React from "react";
+import DropDown from "./DropDown";
+import BurgerIcon from "./BurgerIcon";
+import SideMenu from "./SideMenu";
 
 interface NavbarDate {
   thm: any;
@@ -11,7 +13,7 @@ interface NavbarDate {
   lng: string;
 }
 
-const NavList = [
+export const NavList = [
   {
     id: 1,
     title: "about me",
@@ -51,165 +53,87 @@ const NavList = [
 ];
 
 function NavBar({ thm, toggleTheme, t, HandleChangeLng, lng }: NavbarDate) {
+  const [DropDownShow, setDropDownShow] = useState(false);
+  const [open, setOpen] = useState(false);
+
   return (
     <>
-      <Nav>
-        <Link to="/" style={{ LinkStyled } as React.CSSProperties}>
-          <Row>
-            <Logo
-              src={require("../../Assets/logo.png")}
-              alt="Logo Faramarz Bakhsheshi"
-            ></Logo>
-            <H6>Faramarz Bakhsheshi</H6>
-          </Row>
-        </Link>
-        <Menu>
-          {NavList.map((item) => (
-            <MenuItem className={item.className} key={item.id}>
-              <Link to={item.path}>{t(item.title)}</Link>
-            </MenuItem>
-          ))}
-        </Menu>
-      </Nav>
-
-      <nav className="navbar fixed-top navbar-expand-lg p-2" data-theme={thm}>
-        <div className="container-fluid py-1 px-3">
-          <Link to="/" className="navbar-brand">
-            <div className="br d-flex align-items-center">
-              <img
-                className="m-0 p-0"
-                src={require("../../Assets/logo.png")}
-                width="40"
-                alt="Logo Faramarz Bakhsheshi"
-              />
-              <h5 className="d-none d-sm-block m-0">Faramarz Bakhsheshi</h5>
-            </div>
-          </Link>
-          <button
-            className="navbar-toggler p-0"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+      <AppBar>
+        <Nav>
+          <Link
+            to="/"
+            style={LinkStyled}
+            onClick={() => {
+              setDropDownShow(false);
+            }}
           >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
-              <li className="nav-item p-0 pt-2 pt-lg-0 my-auto mx-1">
-                <Link to="/about" className="nav-link py-2 p-lg-0 h6 m-0">
-                  {t("about me")}
-                </Link>
-              </li>
-              <li className="nav-item my-auto mx-1">
-                <Link to="/projects" className="nav-link py-2 p-lg-0 h6 m-0">
-                  {t("projects")}
-                </Link>
-              </li>
-              <li className="nav-item my-auto mx-1">
-                <Link to="/education" className="nav-link py-2 p-lg-0 h6 m-0">
-                  {t("education")}
-                </Link>
-              </li>
-              <li className="nav-item my-auto mx-1">
-                <Link to="/experience" className="nav-link py-2 p-lg-0 h6 m-0">
-                  {t("experience")}
-                </Link>
-              </li>
-              <li className="nav-item my-auto mx-1">
-                <Link to="/skills" className="nav-link py-2 p-lg-0 h6 m-0">
-                  {t("skills")}
-                </Link>
-              </li>
-              <li className="nav-item my-auto mx-1">
-                <Link to="/contact" className="nav-link py-2 p-lg-0 h6 m-0">
-                  {t("contact")}
-                </Link>
-              </li>
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="#lng"
-                  id="navbarDropdownMenuLink"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <img
-                    className="mb-2"
-                    height="20"
-                    width="20"
-                    src={lng}
-                    alt="language English"
-                  />
-                </a>
-                <ul
-                  className="drop-down dropdown-menu dropdown-menu-end"
-                  aria-labelledby="navbarDropdownMenu"
-                >
-                  <li>
-                    <a
-                      className="drop-down-text dropdown-item"
-                      onClick={() => {
-                        HandleChangeLng("en");
-                      }}
-                      href="#en"
-                    >
-                      <img
-                        className="me-4"
-                        src={require("../../Assets/en.png")}
-                        height="20"
-                        width="20"
-                        alt=""
-                      />
-                      {"English"}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="drop-down-text dropdown-item"
-                      onClick={() => {
-                        HandleChangeLng("de");
-                      }}
-                      href="#de"
-                    >
-                      <img
-                        className="me-4"
-                        src={require("../../Assets/de.png")}
-                        height="20"
-                        width="20"
-                        alt=""
-                      />
-                      {"Deutsch"}
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <a href="#theme" className="m-0 m-lg-auto" onClick={toggleTheme}>
-                <div className="container dark-theme p-0 m-0 text-center">
-                  <img
-                    className="dark-theme-icon "
-                    width="30"
-                    height="30"
-                    src={require(`../../Assets/${thm}.png`)}
-                    alt="dark mode"
-                  />
-                </div>
-              </a>
-            </ul>
-          </div>
-        </div>
-      </nav>
+            <Row>
+              <Logo
+                src={require("../../Assets/logo.png")}
+                alt="Logo Faramarz Bakhsheshi"
+              ></Logo>
+              <H5>Faramarz Bakhsheshi</H5>
+            </Row>
+          </Link>
+          <Row>
+            <BurgerIcon open={open} setOpen={setOpen} />
+          </Row>
+          <Menu>
+            {NavList.map((item) => (
+              <MenuItem
+                className={item.className}
+                key={item.id}
+                onClick={() => {
+                  setDropDownShow(false);
+                }}
+              >
+                <Link to={item.path}>{t(item.title)}</Link>
+              </MenuItem>
+            ))}
+            <MenuItem>
+              <Image
+                onClick={() => {
+                  !DropDownShow
+                    ? setDropDownShow(true)
+                    : setDropDownShow(false);
+                }}
+                src={lng}
+              ></Image>
+            </MenuItem>
+            <MenuItem>
+              <Center>
+                <ThemeIcon
+                  onClick={toggleTheme}
+                  src={require(`../../Assets/${thm}.png`)}
+                ></ThemeIcon>
+              </Center>
+            </MenuItem>
+          </Menu>
+        </Nav>
+        <Div
+          onClick={() => {
+            setDropDownShow(false);
+          }}
+        >
+          <DropDown
+            active={DropDownShow}
+            t={t}
+            HandleChangeLng={HandleChangeLng}
+          />
+        </Div>
+      </AppBar>
+      <SideMenu open={open} setOpen={setOpen} />
     </>
   );
 }
-
 export default NavBar;
 
-const Nav = styled.nav`
+const AppBar = styled.div`
   position: fixed;
+  width: 100%;
+  z-index: 1;
+`;
+const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -218,8 +142,10 @@ const Nav = styled.nav`
   border: 10px solid ${({ theme }) => theme.body.background};
   background: ${({ theme }) => theme.body.containerLight};
   border-radius: 0 0 20px 20px;
-  z-index: 1;
 `;
+const LinkStyled = {
+  textDecoration: "none",
+};
 const Row = styled.div`
   display: flex;
   align-items: center;
@@ -229,7 +155,7 @@ const Logo = styled.img`
   width: 40px;
   height: 40px;
 `;
-const H6 = styled.h6`
+const H5 = styled.h5`
   color: ${({ theme }) => theme.text.color};
   display: none;
   padding-left: 10px;
@@ -262,10 +188,19 @@ const MenuItem = styled.li`
     }
   }
 `;
-
-const LinkStyled = styled(Link)`
-  a {
-    color: ${({ theme }) => theme.text.color};
-    text-decoration: none;
-  }
+const Image = styled.img`
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+`;
+const Div = styled.div``;
+const Center = styled.div`
+  padding-top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const ThemeIcon = styled.img`
+  height: 30px;
+  width: 30px;
 `;

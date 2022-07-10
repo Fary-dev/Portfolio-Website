@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
 interface AboutModel {
-  thm: any;
   t: any;
 }
 
-const About = ({ thm, t }: AboutModel) => {
+const About = ({ t }: AboutModel) => {
   return (
     <Body>
       <Container>
@@ -29,7 +28,7 @@ const About = ({ thm, t }: AboutModel) => {
 
 export default About;
 
-const Body = styled.body`
+const Body = styled.div`
   background-color: ${({ theme }) => theme.body.background};
   overflow: hidden;
   box-sizing: border-box;

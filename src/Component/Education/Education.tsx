@@ -2,7 +2,6 @@ import EducationWidget from "./EducationWidget";
 import styled from "styled-components";
 
 interface EducationModel {
-  thm: any;
   t: any;
 }
 const EducationList = [
@@ -33,7 +32,7 @@ const EducationList = [
   },
 ];
 
-const Education = ({ thm, t }: EducationModel) => {
+const Education = ({ t }: EducationModel) => {
   return (
     <Body>
       <Container>
@@ -100,7 +99,7 @@ const Education = ({ thm, t }: EducationModel) => {
 
 export default Education;
 
-const Body = styled.body`
+const Body = styled.div`
   background-color: ${({ theme }) => theme.body.background};
   overflow: hidden;
   padding: 0 10px;
@@ -123,7 +122,7 @@ const Space = styled.div`
 `;
 const Symbol = styled.img`
   position: absolute;
-  top: 70px;
+  top: 85px;
   width: clamp(65px, 4.2vw, 100px);
   filter: invert(${({ theme }) => theme.invert});
   opacity: ${({ theme }) => theme.opacity};
@@ -131,7 +130,7 @@ const Symbol = styled.img`
 const Title = styled.h5`
   color: ${({ theme }) => theme.text.color};
   position: absolute;
-  top: clamp(135px, 7vw, 150px);
+  top: clamp(145px, 7vw, 150px);
   opacity: ${({ theme }) => theme.opacity};
 `;
 const ListViewBuilder = styled.div`
