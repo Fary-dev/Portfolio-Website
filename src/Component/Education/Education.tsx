@@ -1,5 +1,6 @@
 import EducationWidget from "./EducationWidget";
 import styled from "styled-components";
+import SymbolEducation from "../../Assets/education.webp";
 
 interface EducationModel {
   t: any;
@@ -37,10 +38,7 @@ const Education = ({ t }: EducationModel) => {
     <Body>
       <Container>
         <Space></Space>
-        <Symbol
-          src={require("../../Assets/education.png")}
-          alt="education symbol"
-        ></Symbol>
+        <Symbol src={SymbolEducation} alt="education symbol"></Symbol>
         <Title>{t("education")}</Title>
         <ListViewBuilder>
           {EducationList.map((e, idx) => (

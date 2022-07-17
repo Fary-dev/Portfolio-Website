@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import DropDown from "./DropDown";
 import BurgerIcon from "./BurgerIcon";
-import SideMenu from "./SideMenu";
+import Logo from "../../Assets/logo.webp";
+import Dark from "../../Assets/dark.webp";
+import Light from "../../Assets/light.webp";
+import EN from "../../Assets/en.webp";
+import DE from "../../Assets/de.webp";
 
 interface NavbarDate {
   thm: any;
@@ -11,6 +15,9 @@ interface NavbarDate {
   t: any;
   HandleChangeLng: any;
   lng: string;
+}
+interface PropsStyle {
+  open?: boolean;
 }
 
 export const NavList = [
@@ -58,7 +65,12 @@ function NavBar({ thm, toggleTheme, t, HandleChangeLng, lng }: NavbarDate) {
 
   return (
     <>
-      <AppBar>
+      <AppBar
+        onMouseLeave={() => {
+          if (open) setOpen(false);
+          if (DropDownShow) setDropDownShow(false);
+        }}
+      >
         <Nav>
           <Link
             to="/"
@@ -68,61 +80,61 @@ function NavBar({ thm, toggleTheme, t, HandleChangeLng, lng }: NavbarDate) {
             }}
           >
             <Row>
-              <Logo
-                src={require("../../Assets/logo.png")}
-                alt="Logo Faramarz Bakhsheshi"
-              ></Logo>
-              <H5>Faramarz Bakhsheshi</H5>
+              <img src={Logo} alt="Logo Faramarz Bakhsheshi"></img>
+              <h5>Faramarz Bakhsheshi</h5>
             </Row>
           </Link>
-          <Row>
-            <BurgerIcon open={open} setOpen={setOpen} />
-          </Row>
-          <Menu>
+
+          <BurgerIcon open={open} setOpen={setOpen} />
+
+          <Menu open={open}>
             {NavList.map((item) => (
               <MenuItem
                 className={item.className}
                 key={item.id}
                 onClick={() => {
-                  setDropDownShow(false);
+                  if (DropDownShow) setDropDownShow(false);
+                  if (open) setOpen(false);
                 }}
               >
                 <Link to={item.path}>{t(item.title)}</Link>
               </MenuItem>
             ))}
-            <MenuItem>
-              <Image
-                onClick={() => {
-                  !DropDownShow
-                    ? setDropDownShow(true)
-                    : setDropDownShow(false);
-                }}
-                src={lng}
-              ></Image>
-            </MenuItem>
-            <MenuItem>
+            <MenuItem
+              onClick={() => {
+                !DropDownShow ? setDropDownShow(true) : setDropDownShow(false);
+              }}
+            >
               <Center>
-                <ThemeIcon
-                  onClick={toggleTheme}
-                  src={require(`../../Assets/${thm}.png`)}
-                ></ThemeIcon>
+                <Image src={lng === "en" ? EN : DE}></Image>
+                <Div
+                  onClick={() => {
+                    setDropDownShow(false);
+                  }}
+                >
+                  <DropDown
+                    position={window.innerWidth > 992 ? true : false}
+                    active={DropDownShow}
+                    t={t}
+                    HandleChangeLng={HandleChangeLng}
+                  />
+                </Div>
+              </Center>
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                if (DropDownShow) setDropDownShow(false);
+                if (open) setOpen(false);
+                toggleTheme();
+              }}
+            >
+              <Center>
+                <ThemeIcon src={thm === "dark" ? Dark : Light}></ThemeIcon>
               </Center>
             </MenuItem>
           </Menu>
         </Nav>
-        <Div
-          onClick={() => {
-            setDropDownShow(false);
-          }}
-        >
-          <DropDown
-            active={DropDownShow}
-            t={t}
-            HandleChangeLng={HandleChangeLng}
-          />
-        </Div>
       </AppBar>
-      <SideMenu open={open} setOpen={setOpen} />
     </>
   );
 }
@@ -131,76 +143,121 @@ export default NavBar;
 const AppBar = styled.div`
   position: fixed;
   width: 100%;
-  z-index: 1;
+  z-index: 5;
+  @media (min-width: 992px) {
+    height: 75px;
+  }
 `;
 const Nav = styled.nav`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
-  padding: 5px 16px;
+  height: 100%;
+  padding: 8px 16px;
   border: 10px solid ${({ theme }) => theme.body.background};
   background: ${({ theme }) => theme.body.containerLight};
   border-radius: 0 0 20px 20px;
+  @media (min-width: 992px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 const LinkStyled = {
   textDecoration: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100%",
 };
 const Row = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-`;
-const Logo = styled.img`
-  width: 40px;
-  height: 40px;
-`;
-const H5 = styled.h5`
-  color: ${({ theme }) => theme.text.color};
-  display: none;
-  padding-left: 10px;
-  margin: 0;
-  @media (min-width: 577px) {
-    display: block;
+  h5 {
+    color: ${({ theme }) => theme.text.color};
+    display: none;
+    padding-left: 10px;
+    margin: 0;
+    @media (min-width: 577px) {
+      display: block;
+    }
+  }
+  img {
+    width: 40px;
+    height: 40px;
   }
 `;
-const Menu = styled.ul`
+const Menu = styled.ul<PropsStyle>`
+  width: 100%;
   list-style-type: none;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  display: ${({ open }) => (open ? "flex" : "none")};
+  flex-direction: column;
+  align-items: flex-start;
 
+  height: 100%;
   @media (min-width: 992px) {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    gap: 10px;
   }
 `;
 const MenuItem = styled.li`
-  padding-top: 0.6rem;
+  width: 100%;
   font-weight: 400;
+  transition: 0.2s;
+  border-radius: 16px;
+  cursor: pointer;
   a {
     color: ${({ theme }) => theme.text.color};
     text-decoration: none;
     opacity: 0.6;
     transition: 0.2s;
+    display: block;
+    padding: 0.6rem;
+    @media (min-width: 992px) {
+      padding: 0.6rem 0;
+    }
     &:hover {
       opacity: 1;
     }
+  }
+  &:hover {
+    background-color: ${({ theme }) => theme.body.background};
+    @media (min-width: 992px) {
+      background-color: transparent;
+    }
+  }
+  @media (min-width: 992px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 40px;
   }
 `;
 const Image = styled.img`
   height: 25px;
   width: 25px;
-  cursor: pointer;
+  margin: 10px 20px;
+  @media (min-width: 992px) {
+    margin: 5px;
+  }
 `;
 const Div = styled.div``;
 const Center = styled.div`
-  padding-top: 3px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
 `;
 const ThemeIcon = styled.img`
-  height: 30px;
-  width: 30px;
+  height: 25px;
+  width: 25px;
+  margin: 10px 20px;
+  @media (min-width: 992px) {
+    margin: 5px;
+  }
 `;

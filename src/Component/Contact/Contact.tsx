@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ContactItem from "./ContactItem";
 
@@ -11,38 +11,60 @@ const contactList = [
     icon: "location",
     title: "i live in",
     details: "austria, wien",
+    url: "https://goo.gl/maps/DMgoFtsmsQTZFsHL6",
   },
   {
     icon: "tel",
     title: "call",
     details: "+43 67762733583",
+    url: "tel:067762733583",
   },
   {
     icon: "whatsapp",
     title: "whatsapp",
     details: "send massage",
+    url: "https://wa.me/4367762733583?text=Hello",
   },
   {
     icon: "email",
     title: "email",
     details: "Fbakhsheshi@ymail.com",
+    url: "mailto:fbakhsheshi@ymail.com",
   },
 ];
 
 const Contact = ({ t }: ContactModel) => {
+  const [emailText, setEmailText] = useState("");
+
+  function checkEmail() {
+    var email = document.getElementById("Email") as HTMLInputElement;
+    var filter =
+      // eslint-disable-next-line no-useless-escape
+      /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    if (!filter.test(String(email).toLowerCase().trim())) {
+      alert("Please provide a valid email address");
+      // email.focus;
+      return false;
+    }
+    setEmailText(email.innerHTML);
+    email.innerHTML = emailText;
+  }
+
   return (
     <Body>
       <Container>
         <Space></Space>
         <Symbol
-          src={require("../../Assets/contact.png")}
-          alt="education symbol"
+          src={require("../../Assets/contact.webp")}
+          alt="contact symbol"
         ></Symbol>
         <Title>{t("contact")}</Title>
         <Builder>
           {contactList.map((e, idx) => (
             <Grid style={{ "--count": idx } as React.CSSProperties} key={idx}>
               <ContactItem
+                url={e.url}
                 icon={e.icon}
                 title={t(e.title)}
                 details={t(e.details)}
@@ -58,47 +80,60 @@ const Contact = ({ t }: ContactModel) => {
           }
         >
           <Column>
-            <Form>
+            <Form
+              action="https://formsubmit.co/fbakhsheshi@ymail.com"
+              method="POST"
+            >
               <H1>{t("contact info")}</H1>
               <RowForm>
                 <TextField
+                  name="fName"
                   type="text"
-                  className="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
                   placeholder={t("first name")}
+                  required
                 ></TextField>
                 <TextField
+                  name="lName"
                   type="text"
-                  className="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
                   placeholder={t("last name")}
+                  required
                 ></TextField>
               </RowForm>
               <TextField
+                name="email"
                 type="email"
-                className="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
+                id="Email"
                 placeholder={t("email")}
+                onChange={(e) => {
+                  setEmailText(e.target.value.trim());
+                }}
+                required
               ></TextField>
               <Textarea
-                className="form-control"
+                name="massage"
                 id="exampleFormControlTextarea1"
                 placeholder={t("massage")}
+                required
                 rows={5}
               ></Textarea>
-              <Button>{t("submit")}</Button>
+              <Button value="Validate" type="submit" onClick={checkEmail}>
+                {t("submit")}
+              </Button>
             </Form>
             <RowIcons>
-              <A href="#linkedin">
+              <A
+                href="https://www.linkedin.com/in/faramarz-b-82108a85"
+                target="_blank"
+              >
                 <Icon className="social-icons bi bi-linkedin me-3"></Icon>
               </A>
-              <A href="#github">
+              <A href="https://github.com/Fary-dev" target="_blank">
                 <Icon className="social-icons bi bi-github me-3"></Icon>
               </A>
-              <A href="#facebook">
+              <A
+                href="https://www.facebook.com/faramarz.bakhsheshi"
+                target="_blank"
+              >
                 <Icon className="social-icons bi bi-facebook"></Icon>
               </A>
             </RowIcons>
@@ -123,6 +158,20 @@ const Body = styled.div`
   background-color: ${({ theme }) => theme.body.background};
   overflow: hidden;
   padding: 0 10px;
+
+  @-webkit-keyframes autofill {
+    0%,
+    100% {
+      color: #666;
+      background: transparent;
+    }
+  }
+
+  input:-webkit-autofill {
+    -webkit-animation-delay: 1s; /* Safari support - any positive time runs instantly */
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+  }
 `;
 const Container = styled.div`
   display: flex;
@@ -142,8 +191,8 @@ const Space = styled.div`
 `;
 const Symbol = styled.img`
   position: absolute;
-  top: 94px;
-  width: clamp(45px, 4.2vw, 50px);
+  top: 95px;
+  width: clamp(43px, 4.2vw, 45px);
   filter: invert(${({ theme }) => theme.invert});
   opacity: ${({ theme }) => theme.opacity};
 `;
@@ -238,24 +287,30 @@ const RowForm = styled.div`
   gap: 20px;
 `;
 const TextField = styled.input`
+  width: 100%;
+  padding: 8px;
   margin: 10px 0;
+  border-radius: 10px;
   background-color: ${({ theme }) => theme.textField.background};
   border: 1px solid ${({ theme }) => theme.textField.borderColor};
   color: ${({ theme }) => theme.text.color};
-
   &:focus {
     outline: none;
-    background-color: ${({ theme }) => theme.body.containerLight};
+    background-color: ${({ theme }) => theme.textField.background};
     border-color: rgb(255, 209, 4);
     box-shadow: 0 1 10px ${({ theme }) => theme.primaryColor};
     color: ${({ theme }) => theme.text.color};
   }
   &::placeholder {
     color: rgba(105, 105, 105, 0.5);
+    font-size: 0.8rem;
+    padding-left: 10px;
   }
 `;
 const Textarea = styled.textarea`
+  padding: 8px;
   margin: 10px 0;
+  border-radius: 10px;
   background-color: ${({ theme }) => theme.textField.background};
   border: 1px solid ${({ theme }) => theme.textField.borderColor};
   color: ${({ theme }) => theme.text.color};
@@ -269,6 +324,8 @@ const Textarea = styled.textarea`
   }
   &::placeholder {
     color: rgba(105, 105, 105, 0.5);
+    font-size: 0.8rem;
+    padding-left: 10px;
   }
 `;
 const Iframe = styled.iframe`
@@ -283,7 +340,7 @@ const Button = styled.button`
   margin: 20px 0;
   padding: 5px 0;
   color: ${({ theme }) => theme.button.color};
-  background-color: ${({ theme }) => theme.body.containerLight};
+  background-color: ${({ theme }) => theme.body.container};
   border: 2px solid ${({ theme }) => theme.button.borderColor};
   opacity: 1;
   border-radius: 5px;

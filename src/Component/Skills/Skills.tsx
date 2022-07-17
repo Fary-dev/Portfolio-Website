@@ -1,6 +1,7 @@
 import LineProgress from "./LineProgress";
 import Progress from "./Progress";
 import styled from "styled-components";
+import SymbolSkills from "../../Assets/skills.webp";
 
 interface SkillsModel {
   t: any;
@@ -48,10 +49,7 @@ const Skills = ({ t }: SkillsModel) => {
     <Body>
       <Container>
         <Space></Space>
-        <Symbol
-          src={require("../../Assets/skills.png")}
-          alt="skills symbol"
-        ></Symbol>
+        <Symbol src={SymbolSkills} alt="skills symbol"></Symbol>
         <Title>{t("skills")}</Title>
         <Column>
           {SkillsList.map((e, idx) => (
@@ -64,11 +62,11 @@ const Skills = ({ t }: SkillsModel) => {
           ))}
         </Column>
         <Grid>
-          {SkillsList.map((e, i) => (
+          {SkillsList.map((e, idx) => (
             <Progress
-              key={i}
+              key={idx}
               percent={e.percent ?? 0}
-              id={i + 1}
+              id={idx + 1}
               title={e.name}
               color={e.color}
             />

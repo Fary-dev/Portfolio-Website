@@ -1,4 +1,3 @@
-// import React, { createContext, useState } from "react";
 import React, { useState } from "react";
 import Navbar from "./Component/Navbar/Navbar";
 import About from "./Component/About/About";
@@ -13,8 +12,6 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "./Component/Themes";
 
-// export const ThemeContext = createContext({});
-
 function App() {
   const { t, i18n } = useTranslation();
 
@@ -27,22 +24,20 @@ function App() {
     localStorage.setItem("theme", theme);
   };
   const [language, setLanguage] = useState(
-    localStorage.getItem("lng") === "en"
-      ? require("./Assets/en.png")
-      : require("./Assets/de.png")
+    localStorage.getItem("lng") === "en" ? "en" : "de"
   );
+
   const HandleChangeLng = (lng: string) => {
     if (lng === "en") {
-      setLanguage(require("./Assets/en.png"));
+      setLanguage("en");
     } else {
-      setLanguage(require("./Assets/de.png"));
+      setLanguage("de");
     }
     i18n.changeLanguage(lng);
     localStorage.setItem("lng", lng);
   };
 
   return (
-    // <ThemeContext.Provider value={{ theme, setTheme }}>
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <Router>
         <Navbar
@@ -63,7 +58,6 @@ function App() {
         </Routes>
       </Router>
     </ThemeProvider>
-    // </ThemeContext.Provider>
   );
 }
 export default App;

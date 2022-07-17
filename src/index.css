@@ -3,6 +3,7 @@ body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scrollbar-shadow-color: aqua;
 }
 
 code {
@@ -27,4 +28,22 @@ p {
 
 span {
     font-family: Arial, Helvetica, sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 13px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(204, 191, 2, 0.616);
+    border-radius: 5px;
+    margin: 03px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(204, 191, 2);
 }

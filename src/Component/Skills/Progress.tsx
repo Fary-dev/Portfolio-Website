@@ -46,7 +46,7 @@ function Progress({ id, percent, title, color }: ProgressModel) {
       </Skills>
       <Skill>
         {title}
-        <Image src={require(`../../Assets/${title}.png`)} alt={title}></Image>
+        <Image src={require(`../../Assets/${title}.webp`)} alt={title}></Image>
       </Skill>
     </Body>
   );
@@ -129,6 +129,7 @@ const Circle = styled.circle`
   }
 `;
 const Skill = styled.p`
+  color: ${({ theme }) => theme.text.color};
   text-transform: capitalize;
   padding-top: 10px;
 `;

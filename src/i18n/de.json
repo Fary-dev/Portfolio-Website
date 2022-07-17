@@ -1,5 +1,5 @@
 {
-    "Hello,I'm": "Hallo, ich bin",
+    "Hello, I'm": "Hallo, ich bin",
     "education": "Ausbildung",
     "experience": "Erfahrung",
     "skills": "Fähigkeiten",
@@ -26,5 +26,6 @@
     "firoozkuh university of iran": "Firoozkuh Universität im Iran",
     "software computer": "Associate Degree Studium Fach richtung Computer",
     "bachelor of software engineering": "Bachelorstudium Computer Software-Technologie",
-    "self study": "Selbst Studium"
+    "self study": "Selbst Studium",
+    "visit": "Besuch"
 }

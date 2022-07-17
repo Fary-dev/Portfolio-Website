@@ -4,6 +4,10 @@ interface DropdownProps {
   active: boolean;
   t: any;
   HandleChangeLng: any;
+  position: boolean;
+}
+interface PropsStyle {
+  position: boolean;
 }
 
 const dropDownItems = [
@@ -19,9 +23,10 @@ const dropDownItems = [
   },
 ];
 
-function DropDown({ active, t, HandleChangeLng }: DropdownProps) {
+function DropDown({ position, active, t, HandleChangeLng }: DropdownProps) {
   return (
     <DropDownList
+      position={position}
       style={{ "--display": active ? "block" : "none" } as React.CSSProperties}
     >
       {dropDownItems.map((item) => (
@@ -32,9 +37,9 @@ function DropDown({ active, t, HandleChangeLng }: DropdownProps) {
           }}
         >
           <Image
-            src={require(`../../Assets/${item.image}.png`)}
+            src={require(`../../Assets/${item.image}.webp`)}
             alt={item.language}
-          ></Image>{" "}
+          ></Image>
           {t(item.language)}
         </DropDownListItem>
       ))}
@@ -44,25 +49,34 @@ function DropDown({ active, t, HandleChangeLng }: DropdownProps) {
 
 export default DropDown;
 
-const DropDownList = styled.ul`
-  display: var(--display);
-  position: absolute;
+const DropDownList = styled.ul<PropsStyle>`
+  display: none;
+  position: ${({ position }) => (position ? "absolute" : "relative")};
   list-style: none;
   text-align: start;
   width: 9rem;
   right: 50px;
+  padding-left: 80px;
+  display: var(--display);
+  @media (min-width: 992px) {
+    padding-top: 20px;
+    padding-left: 20px;
+  }
 `;
 const DropDownListItem = styled.li`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background-color: ${({ theme }) => theme.body.container};
+
   color: ${({ theme }) => theme.text.color};
   cursor: pointer;
   transition: 0.2s;
   &:hover {
-    // background-color: ${({ theme }) => theme.body.containerLight};
-    opacity: 0.6;
+    background-color: ${({ theme }) => theme.body.container};
+    opacity: 0.9;
+  }
+  @media (min-width: 992px) {
+    background-color: ${({ theme }) => theme.body.background};
   }
 `;
 const Image = styled.img`

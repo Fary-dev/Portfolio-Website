@@ -4,19 +4,22 @@ interface contactWidgetItem {
   icon: string;
   title: string;
   details: string;
+  url: string;
 }
 
-function ContactItem({ icon, title, details }: contactWidgetItem) {
+function ContactItem({ url, icon, title, details }: contactWidgetItem) {
   return (
     <Body>
-      <Container>
-        <Image
-          src={require(`../../Assets/${icon}.png`)}
-          alt="my location"
-        ></Image>
-        <Title>{title}</Title>
-        <Details>{details}</Details>
-      </Container>
+      <a href={url} target="_blank ">
+        <Container>
+          <img
+            src={require(`../../Assets/${icon}.webp`)}
+            alt="my location"
+          ></img>
+          <h5>{title}</h5>
+          <p>{details}</p>
+        </Container>
+      </a>
     </Body>
   );
 }
@@ -25,6 +28,9 @@ export default ContactItem;
 
 const Body = styled.div`
   padding: 15px;
+  a {
+    text-decoration: none;
+  }
 `;
 const Container = styled.div`
   display: flex;
@@ -80,17 +86,30 @@ const Container = styled.div`
       }
     }
   }
+  h5 {
+    color: ${({ theme }) => theme.text.color};
+    padding-top: 30px;
+  }
+  img {
+    width: 50px;
+    height: 50px;
+    opacity: 0.5;
+    object-position: 50% 50%;
+  }
+  p {
+    color: ${({ theme }) => theme.text.p};
+  }
 `;
-const Image = styled.img`
-  width: 50px;
-  height: 50px;
-  opacity: 0.5;
-  object-position: 50% 50%;
-`;
-const Title = styled.h5`
-  color: ${({ theme }) => theme.text.color};
-  padding-top: 30px;
-`;
-const Details = styled.p`
-  color: ${({ theme }) => theme.text.p};
-`;
+// const Image = styled.img`
+//   width: 50px;
+//   height: 50px;
+//   opacity: 0.5;
+//   object-position: 50% 50%;
+// `;
+// const Title = styled.h5`
+//   color: ${({ theme }) => theme.text.color};
+//   padding-top: 30px;
+// `;
+// const Details = styled.p`
+//   color: ${({ theme }) => theme.text.p};
+// `;

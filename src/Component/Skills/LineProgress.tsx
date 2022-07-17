@@ -14,7 +14,10 @@ function LineProgress({ title, percent, progress }: LineProgressModel) {
       <Skills>
         <Title>
           {title}
-          <Image src={require(`../../Assets/${title}.png`)} alt={title}></Image>
+          <Image
+            src={require(`../../Assets/${title}.webp`)}
+            alt={title}
+          ></Image>
         </Title>
         <Skill
           style={
@@ -59,6 +62,7 @@ const Skills = styled.div`
   }
 `;
 const Title = styled.p`
+  color: ${({ theme }) => theme.text.color};
   font-weight: 700;
   text-transform: capitalize;
 `;
@@ -90,6 +94,7 @@ const Skill = styled.div`
   }
 `;
 const Span = styled.span`
+  color: ${({ theme }) => theme.text.color};
   position: absolute;
   top: -1.5px;
   right: 5px;

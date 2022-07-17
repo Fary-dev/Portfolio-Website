@@ -1,5 +1,5 @@
 {
-    "Hello,I'm": "Hello,I'm",
+    "Hello, I'm": "Hello, I'm",
     "education": "Education",
     "experience": "Experience",
     "skills": "Skills",
@@ -26,5 +26,6 @@
     "firoozkuh university of iran": "Firoozkuh University of Iran",
     "software computer": "Software Computer",
     "bachelor of software engineering": "Bachelor of Software Engineering",
-    "self study": "Self study"
+    "self study": "Self study",
+    "visit": "Visit"
 }

@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import MyPhoto from "../../Assets/developer.webp";
 
 interface AboutModel {
   t: any;
 }
+const CV = require("../../Assets/CV.pdf");
 
 const About = ({ t }: AboutModel) => {
   return (
@@ -10,17 +12,19 @@ const About = ({ t }: AboutModel) => {
       <Container>
         <Space></Space>
         <Text>
-          {t("Hello,I'm")}
-          <Span>Faramarz</Span>
+          {t("Hello, I'm")}
+          <span>Faramarz</span>
         </Text>
         <TextPrimary>{t("Frontend Developer")}</TextPrimary>
-        <Image src={require("../../Assets/developer.png")}></Image>
-        <P>
+        <img src={MyPhoto} alt="Faramarz Bakhsheshi"></img>
+        <p>
           {t(
             "My name is Faramarz Bakhsheshi I'm a Front End Developer, Bachelor of Software Engineering in Iran. I describe myself as a passionate developer who loves coding, open source, the web and mobile platform.Aside from my job, I like to create and contribute to open source projects. That helps me to learn a ton of new stuff, grow as a developer and support other open source projects. In my free time you can find me longboarding , at the gym."
           )}
-        </P>
-        <Button>{t("download resume")}</Button>
+        </p>
+        <a href={CV} download="Faramarz-Bakhsheshi-CV">
+          <Button>{t("download resume")}</Button>
+        </a>
       </Container>
     </Body>
   );
@@ -42,10 +46,42 @@ const Container = styled.div`
   min-width: 100%;
   justify-content: center;
   align-items: center;
+  img {
+    padding-top: 30px;
+    display: block;
+    width: 30vw;
+    max-width: 400px;
+    max-height: 400px;
+    animation: hello 1s ease forwards;
+    animation-delay: 1000ms;
+    opacity: 0;
+    @media (max-width: 750px) {
+      display: none;
+    }
+  }
+  p {
+    text-align: justify;
+    max-width: 1400px;
+    color: ${({ theme }) => theme.text.p};
+    font-size: clamp(16px, 2.5vw, 20px);
+    padding: 5vh 5vw;
+    animation: hello 1s ease forwards;
+    animation-delay: 1200ms;
+    opacity: 0;
+    @media (min-width: 750px) {
+      width: 90%;
+    }
+    @media (min-width: 970px) {
+      width: 85%;
+    }
+    @media (min-width: 1170px) {
+      width: 80%;
+    }
+  }
 `;
 const Space = styled.div`
   display: inline-block;
-  height: 60px;
+  height: 80px;
 `;
 const Text = styled.h1`
   display: flex;
@@ -57,15 +93,15 @@ const Text = styled.h1`
   animation: hello 1s ease forwards;
   animation-delay: 300ms;
   opacity: 0;
-`;
-const Span = styled.span`
-  color: ${({ theme }) => theme.primaryColor};
-  font-size: clamp(28px, 3.5vw, 40px);
-  padding-left: 10px;
-  animation: hello 1s ease forwards;
-  animation-delay: 500ms;
-  opacity: 0;
-  text-shadow: 1px -1px 3px ${({ theme }) => theme.shadow};
+  span {
+    color: ${({ theme }) => theme.primaryColor};
+    font-size: clamp(28px, 3.5vw, 40px);
+    padding-left: 10px;
+    animation: hello 1s ease forwards;
+    animation-delay: 500ms;
+    opacity: 0;
+    text-shadow: 1px -1px 3px ${({ theme }) => theme.shadow};
+  }
 `;
 const TextPrimary = styled(Text)`
   background-color: ${({ theme }) => theme.primaryColor};
@@ -76,36 +112,6 @@ const TextPrimary = styled(Text)`
   animation: hello 1s ease forwards;
   animation-delay: 800ms;
   opacity: 0;
-`;
-const Image = styled.img`
-  display: block;
-  width: 30vw;
-  max-width: 400px;
-  height: auto;
-  animation: hello 1s ease forwards;
-  animation-delay: 1000ms;
-  opacity: 0;
-  @media (max-width: 750px) {
-    display: none;
-  }
-`;
-const P = styled.p`
-  max-width: 1400px;
-  color: ${({ theme }) => theme.text.p};
-  font-size: clamp(16px, 2.5vw, 20px);
-  padding: 5vh 5vw;
-  animation: hello 1s ease forwards;
-  animation-delay: 1200ms;
-  opacity: 0;
-  @media (min-width: 750px) {
-    width: 90%;
-  }
-  @media (min-width: 970px) {
-    width: 85%;
-  }
-  @media (min-width: 1170px) {
-    width: 80%;
-  }
 `;
 const Button = styled.button`
   padding: 5px 20px;

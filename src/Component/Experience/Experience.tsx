@@ -1,5 +1,6 @@
 import ExperienceWidget from "./ExperienceWidget";
 import styled from "styled-components";
+import SymbolExperience from "../../Assets/experience.webp";
 
 interface ExperienceModel {
   t: any;
@@ -33,10 +34,7 @@ const Experience = ({ t }: ExperienceModel) => {
     <Body>
       <Container>
         <Space></Space>
-        <Symbol
-          src={require("../../Assets/experience.png")}
-          alt="experience symbol"
-        ></Symbol>
+        <Symbol src={SymbolExperience} alt="experience symbol"></Symbol>
         <Title>{t("experience")}</Title>
         <ListBuilder>
           {ExperienceList.map((e, idx) => (

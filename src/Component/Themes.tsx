@@ -43,7 +43,7 @@ export const darkTheme = {
   body: {
     background: "#000",
     container: "rgb(23, 26, 28)",
-    containerLight: "rgba(49, 55, 58, 0.699)",
+    containerLight: "rgba(34,39,41, 1)",
   },
   button: {
     color: "#fff",
